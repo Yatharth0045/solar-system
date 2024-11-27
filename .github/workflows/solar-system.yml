@@ -6,12 +6,21 @@ on:
     branches:
       - main
       - 'feature/*'
-    
-jobs:
+
+env:
+  MONGO_URI: "localhost:27017"
+  MONGO_USERNAME: "superuser"
+  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+
+jobs:     
     unit-testing:
         name: Unit Testing
         runs-on: ubuntu-latest
         steps:
+        - name: Setup Mongo
+          run: |
+            docker run -d -e MONGO_INITDB_ROOT_USERNAME=${{ env.MONGO_USERNAME }} -e MONGO_INITDB_ROOT_PASSWORD=${{ env.MONGO_PASSWORD }} -p 27017:27017 --name=mongo mongo:latest
+        
         - name: Checkout Repository
           uses: actions/checkout@v4
 
