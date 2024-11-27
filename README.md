@@ -39,7 +39,7 @@ If the installation was successful, you should be able to run the following comm
     $ npm install
 
 ## Set ENVs
-    $ export MONGO_URI=localhost:27017
+    $ export MONGO_URI=mongodb://127.0.0.1:27017/admin
     $ export MONGO_USERNAME=superuser
     $ export MONGO_PASSWORD=mysecretpassword
 
