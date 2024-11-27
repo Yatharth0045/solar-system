@@ -21,6 +21,9 @@ jobs:
           run: |
             docker run -d -e MONGO_INITDB_ROOT_USERNAME=${{ env.MONGO_USERNAME }} -e MONGO_INITDB_ROOT_PASSWORD=${{ env.MONGO_PASSWORD }} -p 27017:27017 --name=mongo mongo:latest
         
+        - name: Verify Mongo container
+          run: docker ps
+        
         - name: Checkout Repository
           uses: actions/checkout@v4
 
