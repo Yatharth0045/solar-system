@@ -33,24 +33,54 @@ If the installation was successful, you should be able to run the following comm
 
 ---
 ## Setup Mongo
-    $ docker run -d -e MONGO_INITDB_ROOT_USERNAME=superuser -e MONGO_INITDB_ROOT_PASSWORD=mysecretpassword -p 27017:27017 --name=mongo mongo:latest
+```bash
+docker run -d -e MONGO_INITDB_ROOT_USERNAME=superuser -e MONGO_INITDB_ROOT_PASSWORD=mysecretpassword -p 27017:27017 --name=mongo mongo:latest
+```
+
+## Exec mongosh into container
+```bash
+## Localhost
+docker exec -it mongo mongosh -u superuser -p mysecretpassword
+## Solar DB
+docker exec -it mongo mongosh 'mongodb+srv://supercluster.d83jj.mongodb.net/superData' -u 'superuser' -p 'SuperPassword'
+```
+
+## Get mongo data
+```bash
+docker exec -it mongo mongodump -d superData -u 'superuser' -p 'SuperPassword' -o solar-dump 'mongodb+srv://supercluster.d83jj.mongodb.net/'
+```
 
 ## Install Dependencies from `package.json`
-    $ npm install
+```bash
+npm install
+```
 
 ## Set ENVs
-    $ export MONGO_URI=mongodb://127.0.0.1:27017/admin
-    $ export MONGO_USERNAME=superuser
-    $ export MONGO_PASSWORD=mysecretpassword
+```bash
+export MONGO_URI='mongodb+srv://supercluster.d83jj.mongodb.net/superData'
+export MONGO_USERNAME='superuser'
+export MONGO_PASSWORD='SuperPassword'
+```
 
 ## Run Unit Testing
-    $ npm test
+```bash
+npm test
+```
+
+## Hit request via cURL
+```bash
+curl -X POST 'http://localhost:3000/planet' -H 'Content-type: application/json; charset=UTF-8' --data-raw '{"id":"3"}'
+```
 
 ## Run Code Coverage
-    $ npm run coverage
+```bash
+npm run coverage
+```
 
 ## Run Application
-    $ npm start
+```bash
+npm start
+```
 
 ## Access Application on Browser
     http://localhost:3000/
