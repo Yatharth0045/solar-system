@@ -32,8 +32,16 @@ If the installation was successful, you should be able to run the following comm
     6.1.0
 
 ---
+## Setup Mongo
+    $ docker run -d -e MONGO_INITDB_ROOT_USERNAME=superuser -e MONGO_INITDB_ROOT_PASSWORD=mysecretpassword -p 27017:27017 --name=mongo mongo:latest
+
 ## Install Dependencies from `package.json`
     $ npm install
+
+## Set ENVs
+    $ export MONGO_URI=localhost:27017
+    $ export MONGO_USERNAME=superuser
+    $ export MONGO_PASSWORD=mysecretpassword
 
 ## Run Unit Testing
     $ npm test
