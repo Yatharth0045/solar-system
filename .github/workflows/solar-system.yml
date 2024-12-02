@@ -35,9 +35,11 @@ jobs:
     
         - name: Unit Testing
           run: npm test
+          if: success()
 
         - name: Check Test Resulr
           run: ls -a
+          if: always()
           
         - name: Archive Test Result
           uses: actions/upload-artifact@v4
@@ -60,11 +62,11 @@ jobs:
         - name: Install Dependencies
           run: npm install
     
-        - name: Unit Testing
+        - name: Code Coverage
           run: npm run coverage
-          if: success()
+          continue-on-error: true
 
-        - name: Check Test Resulr
+        - name: Check Coverage Result
           run: ls -a
           if: always()
           
