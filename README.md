@@ -34,7 +34,7 @@ If the installation was successful, you should be able to run the following comm
 ---
 ## Setup Mongo
 ```bash
-docker run -d -e MONGO_INITDB_ROOT_USERNAME=superuser -e MONGO_INITDB_ROOT_PASSWORD=mysecretpassword -p 27017:27017 --name=mongo mongo:latest
+docker run --rm -d -e MONGO_INITDB_ROOT_USERNAME=superuser -e MONGO_INITDB_ROOT_PASSWORD=mysecretpassword -p 27017:27017 --mount type=bind,source=./solar-dump,target=/tmp/solar-dump --name=mongo mongo:latest
 ```
 
 ## Exec mongosh into container
@@ -52,7 +52,7 @@ docker exec -it mongo bash
 
 ## Get mongo data
 ```bash
-docker exec -it mongo mongodump -d superData -u 'superuser' -p 'SuperPassword' -o solar-dump 'mongodb+srv://supercluster.d83jj.mongodb.net/'
+docker exec -it mongo mongodump -d superData -u 'superuser' -p 'SuperPassword' -o /tmp/solar-dump 'mongodb+srv://supercluster.d83jj.mongodb.net/'
 ```
 
 ## Install Dependencies from `package.json`
