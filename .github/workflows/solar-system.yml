@@ -62,9 +62,11 @@ jobs:
     
         - name: Unit Testing
           run: npm run coverage
+          if: success()
 
         - name: Check Test Resulr
           run: ls -a
+          if: always()
           
         - name: Archive Code Coverage Result
           uses: actions/upload-artifact@v4
