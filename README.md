@@ -45,6 +45,11 @@ docker exec -it mongo mongosh -u superuser -p mysecretpassword
 docker exec -it mongo mongosh 'mongodb+srv://supercluster.d83jj.mongodb.net/superData' -u 'superuser' -p 'SuperPassword'
 ```
 
+## Exec into mongo container
+```bash
+docker exec -it mongo bash
+```
+
 ## Get mongo data
 ```bash
 docker exec -it mongo mongodump -d superData -u 'superuser' -p 'SuperPassword' -o solar-dump 'mongodb+srv://supercluster.d83jj.mongodb.net/'
