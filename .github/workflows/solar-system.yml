@@ -134,4 +134,4 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${ GITHUB_REPO }/solar-system:${{ github.sha }},${ GITHUB_REPO }/solar-system:latest
+            "ghcr.io/${ GITHUB_REPO }/solar-system:${{ github.sha }}","${ GITHUB_REPO }/solar-system:latest"
