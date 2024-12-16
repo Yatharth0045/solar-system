@@ -102,8 +102,9 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - name: Downcase REPO
+        id: lowercase-repo
         run: |
-          echo "GITHUB_REPO=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+          echo "github_repo=${GITHUB_REPOSITORY@L}" >> "${GITHUB_OUTPUT}"
 
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -118,7 +119,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${ GITHUB_REPO }
+          username: ${{ steps.lowercase-repo.outputs.github_repo }}
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build and push Docker images
@@ -131,7 +132,7 @@ jobs:
       - name: Container Registry Push
         uses: docker/build-push-action@v6.10.0
         env: 
-          GHCR_REPO: ghcr.io/$GITHUB_REPO/solar-system
+          GHCR_REPO: ghcr.io/${{ steps.lowercase-repo.outputs.github_repo }}/solar-system
         with:
           context: .
           push: true
