@@ -93,6 +93,8 @@ jobs:
         
     docker: 
       name: Containerization
+      permissions:
+        packages: write
       env: 
         DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
         GITHUB_USER: ${{ github.repository_owner }}
