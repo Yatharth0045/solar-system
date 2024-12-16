@@ -95,11 +95,16 @@ jobs:
       name: Containerization
       env: 
         DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+        GITHUB_USER: ${{ github.repository_owner.lowercase }}
       needs: 
       - unit-testing
       - code-coverage
       runs-on: ubuntu-latest
       steps:
+      - name: Downcase REPO
+        run: |
+          echo "GITHUB_REPO=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -113,7 +118,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${ GITHUB_REPO }
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build and push Docker images
@@ -129,4 +134,4 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }},${{ github.repository_owner }}/solar-system:latest
+            ghcr.io/${ GITHUB_REPO }/solar-system:${{ github.sha }},${ GITHUB_REPO }/solar-system:latest
