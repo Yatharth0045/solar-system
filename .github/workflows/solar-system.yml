@@ -134,7 +134,7 @@ jobs:
       - name: Container Registry Push
         uses: docker/build-push-action@v6.10.0
         env: 
-          GHCR_REPO: ghcr.io/${{ steps.lowercase-repo.outputs.github_repo }}/solar-system
+          GHCR_REPO: ghcr.io/${{ steps.lowercase-repo.outputs.github_repo }}
         with:
           context: .
           push: true
