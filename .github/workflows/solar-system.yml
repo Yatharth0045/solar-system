@@ -95,7 +95,7 @@ jobs:
       name: Containerization
       env: 
         DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
-        GITHUB_USER: ${{ github.repository_owner.lowercase }}
+        GITHUB_USER: ${{ github.repository_owner }}
       needs: 
       - unit-testing
       - code-coverage
@@ -130,8 +130,10 @@ jobs:
 
       - name: Container Registry Push
         uses: docker/build-push-action@v6.10.0
+        env: 
+          GHCR_REPO: ghcr.io/${ GITHUB_REPO }/solar-system
         with:
           context: .
           push: true
           tags: |
-            "ghcr.io/${ GITHUB_REPO }/solar-system:${{ github.sha }}","${ GITHUB_REPO }/solar-system:latest"
+            "${{ env.GHCR_REPO }}:${{ github.sha }}","${{ env.GHCR_REPO }}:latest"
