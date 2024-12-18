@@ -67,14 +67,26 @@ jobs:
     code-coverage:
         name: Code Coverage
         runs-on: ubuntu-latest
+        container:
+          image: node:20
+        services:
+          mongo-db:
+            image: siddharth67/mongo-db:non-prod
+            options:
+              --name solar_mongo
+        env:
+          MONGO_URI: "mongodb://solar_mongo:27017/superData"
+          MONGO_USERNAME: "non-prod-user"
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD_NON_PROD }}
         steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
 
-        - name: Setup NodeJS Version - 20
-          uses: actions/setup-node@v3
-          with:
-            node-version: 20
+        ## No Longer required as now running job in a node container
+        # - name: Setup NodeJS Version - 20
+        #   uses: actions/setup-node@v3
+        #   with:
+        #     node-version: 20
     
         - name: Cache NPM
           uses: actions/cache@v4
