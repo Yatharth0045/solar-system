@@ -161,3 +161,29 @@ jobs:
           push: true
           tags: |
             "${{ env.GHCR_REPO }}:${{ github.sha }}","${{ env.GHCR_REPO }}:latest"
+
+    dev-deploy:
+      name: Development Deployment
+      runs-on: ubuntu-latest
+      needs:
+        - docker
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Kubectl installer
+        uses: azure/setup-kubectl@v1
+        with:
+          version: 'v1.31.0'
+
+      - name: Kubectl Configuration
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
+          mkdir -p ~/.kube
+          mv kubeconfig ~/.kube/config
+
+      - name: Fetch K8s Details
+        run: |
+          kubectl version
+          echo '===================='
+          kubectl get nodes
