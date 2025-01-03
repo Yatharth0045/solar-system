@@ -122,3 +122,25 @@ docker run --rm -d \
 -p 3001:3000 \
 yatharth0045/solar-system:latest
 ```
+
+### Setup Kubernetes
+
+## Pre-requisites
+
+Install the following
+- minikube
+- ngrok: Signup on ngrok for the authentication token
+
+## Configure ngrok
+```bash
+## Get auth token from ngrok
+## Link: https://dashboard.ngrok.com/get-started/your-authtoken
+ngrok config add-authtoken <auth-token>
+```
+
+## Start minikube and expose it
+```bash
+minikube start
+kubectl config view --flatten | grep server
+ngrok http 62060 ## replace port with the value from above output
+```

@@ -176,18 +176,24 @@ jobs:
         with:
           version: 'v1.31.0'
 
-      - name: Kubectl Configuration
-        uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      ## Using Azure K8s Set Context
+      # - name: Kubectl Configuration
+      #   env:
+      #     KUBE_SERVER: ${{ secrets.K8S_SERVER_IP }}
+      #   uses: azure/k8s-set-context@v1
+      #   with:
+      #     method: kubeconfig
+      #     kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
       ## Manually setting up kubeconfig
-      # - name: Kubectl Configuration
-      #   run: |
-      #     echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
-      #     mkdir -p ~/.kube
-      #     mv kubeconfig ~/.kube/config
+      - name: Kubectl Configuration
+        env:
+          KUBE_SERVER: ${{ secrets.K8S_SERVER_IP }}
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
+          sed -i "s|\${KUBE_SERVER}|$KUBE_SERVER|g" kubeconfig
+          mkdir -p ~/.kube
+          mv kubeconfig ~/.kube/config
 
       - name: Fetch K8s Details
         run: |
