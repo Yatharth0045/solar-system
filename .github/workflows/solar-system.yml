@@ -177,10 +177,17 @@ jobs:
           version: 'v1.31.0'
 
       - name: Kubectl Configuration
-        run: |
-          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
-          mkdir -p ~/.kube
-          mv kubeconfig ~/.kube/config
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+      ## Manually setting up kubeconfig
+      # - name: Kubectl Configuration
+      #   run: |
+      #     echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
+      #     mkdir -p ~/.kube
+      #     mv kubeconfig ~/.kube/config
 
       - name: Fetch K8s Details
         run: |
