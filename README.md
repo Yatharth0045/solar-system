@@ -90,3 +90,35 @@ npm start
 ## Access Application on Browser
     http://localhost:3000/
 
+## Docker 
+
+This section includes building and running the application via docker
+
+### Build
+
+```bash
+docker build -t solar-project .
+```
+
+### Run
+
+Using above build image
+```bash
+docker run \
+--env MONGO_URI='mongodb+srv://supercluster.d83jj.mongodb.net/superData' \
+--env MONGO_USERNAME='superuser' \
+--env MONGO_PASSWORD='SuperPassword' \
+-p 3000:3000 \
+solar-project:latest
+```
+
+Use pre-build image
+```bash
+docker run --rm -d \
+--env MONGO_URI='mongodb+srv://supercluster.d83jj.mongodb.net/superData' \
+--env MONGO_USERNAME='superuser' \
+--env MONGO_PASSWORD='SuperPassword' \
+--name solar-system \
+-p 3001:3000 \
+yatharth0045/solar-system:latest
+```
