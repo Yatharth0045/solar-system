@@ -138,9 +138,18 @@ Install the following
 ngrok config add-authtoken <auth-token>
 ```
 
+## Extract kubeconfig
+```bash
+kubectl config view --flatten > kubeconfig
+```
+
 ## Start minikube and expose it
 ```bash
 minikube start
 kubectl config view --flatten | grep server
-ngrok http 62060 ## replace port with the value from above output
+ngrok http https://127.0.0.1:62060 --host-header="127.0.0.1:62060" ## replace port with the value from above output
+## Update the url in kubeconfig
+
+## Validate if kubeconfig is working
+kubectl --kubeconfig=kubeconfig get nodes
 ```
