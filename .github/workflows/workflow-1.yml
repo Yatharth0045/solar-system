@@ -28,8 +28,18 @@ jobs:
     - name: Unit Testing
       run: npm test
 
-    - name: Store Artifact
+    - name: Store Test Results
       uses: actions/upload-artifact@v4
       with:
         name: mocha-test-results
         path: test-results.xml
+
+    - name: Code Coverage
+      run: npm run coverage
+
+    - name: Store Coverage Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-results
+        path: coverage
+        retention-days: 7

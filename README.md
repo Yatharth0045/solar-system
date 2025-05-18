@@ -40,6 +40,7 @@ If the installation was successful, you should be able to run the following comm
   - Install Dependency
   - Run test cases
   - Store Test result
+  - Run code coverage
 
 ## Setup Mongo
 ```bash
