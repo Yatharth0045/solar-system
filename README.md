@@ -39,6 +39,7 @@ If the installation was successful, you should be able to run the following comm
   - Setup NodeJS
   - Install Dependency
   - Run test cases
+  - Store Test result
 
 ## Setup Mongo
 ```bash
