@@ -1,0 +1,29 @@
+name: workflow-1
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'feature/*'
+jobs:
+  unit-testing:
+    name: Unit Testing
+    runs-on: ubuntu-latest
+    env:
+      MONGO_URI: "mongodb://localhost:27017/superData"
+      MONGO_USERNAME: "non-prod-user"
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD_NON_PROD }}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup NodeJS Version - 18
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Unit Testing
+      run: npm test
