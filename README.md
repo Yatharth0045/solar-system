@@ -38,6 +38,7 @@ If the installation was successful, you should be able to run the following comm
   - Checkout repository
   - Setup NodeJS
   - Install Dependency
+  - Cache Dependency
   - Run test cases
   - Store Test result
   - Run code coverage - ignore if errors out
