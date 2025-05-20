@@ -35,13 +35,18 @@ If the installation was successful, you should be able to run the following comm
 
 ## Github Workflows
 1. workflow-1
-  - Checkout repository
-  - Setup NodeJS
-  - Install Dependency
-  - Cache Dependency
-  - Run test cases
-  - Store Test result
-  - Run code coverage - ignore if errors out
+  - Job: Unit test
+    - Checkout repository
+    - Setup NodeJS
+    - Install Dependency
+    - Cache Dependency
+    - Run test cases
+    - Store Test result
+    - Run code coverage - ignore if errors out
+  - Job: Containerization
+    - Downcase repo
+    - GHCR login
+    - GHCR build and push
 
 
 ## Setup Mongo
