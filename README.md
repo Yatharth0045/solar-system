@@ -32,6 +32,18 @@ If the installation was successful, you should be able to run the following comm
     6.1.0
 
 ---
+
+## Github Workflows
+1. workflow-1
+  - Checkout repository
+  - Setup NodeJS
+  - Install Dependency
+  - Cache Dependency
+  - Run test cases
+  - Store Test result
+  - Run code coverage - ignore if errors out
+
+
 ## Setup Mongo
 ```bash
 docker run --rm -d -e MONGO_INITDB_ROOT_USERNAME=superuser -e MONGO_INITDB_ROOT_PASSWORD=mysecretpassword -p 27017:27017 --mount type=bind,source=./solar-dump,target=/tmp/solar-dump --name=mongo mongo:latest
