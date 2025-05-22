@@ -83,4 +83,5 @@ jobs:
         context: .
         push: true
         tags: |
-          "${{ env.GHCR_REPO }}:${{ github.sha }}","${{ env.GHCR_REPO }}:latest"
+          "${{ env.GHCR_REPO }}:${{ github.sha }}"
+          "${{ env.GHCR_REPO }}:latest"
