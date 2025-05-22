@@ -1,0 +1,54 @@
+schemaVersion: "2.0.0"
+
+# Test metadata
+metadataTest:
+  env:
+    - key: "NODE_ENV"
+      value: "production"
+    - key: "MONGO_URI"
+      value: "uriPlaceholder"
+    - key: "MONGO_USERNAME"
+      value: "usernamePlaceholder"
+    - key: "MONGO_PASSWORD"
+      value: "passwordPlaceholder"
+  exposedPorts: ["3000"]
+  workdir: "/usr/app"
+  user: "appuser"
+
+# Test file system
+fileExistenceTests:
+  - name: "Package.json exists"
+    path: "/usr/app/package.json"
+    shouldExist: true
+  - name: "Node modules exist"
+    path: "/usr/app/node_modules"
+    shouldExist: true
+  - name: "Source directory exists"
+    path: "/usr/app/src"
+    shouldExist: true
+  - name: "Public directory exists"
+    path: "/usr/app/public"
+    shouldExist: true
+
+# Test commands
+commandTests:
+  - name: "Node.js version"
+    command: "node"
+    args: ["--version"]
+    expectedOutput: ["v18.*"]
+  - name: "NPM is installed"
+    command: "npm"
+    args: ["--version"]
+    expectedOutput: [".*"]
+  - name: "User is non-root"
+    command: "id"
+    args: ["-u"]
+    expectedOutput: [".*"]
+    excludedOutput: ["0"]
+
+# Test container health check
+healthCheck:
+  command: ["wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+  interval: "30s"
+  timeout: "3s"
+  retries: 3 

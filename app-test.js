@@ -9,6 +9,54 @@ chai.should();
 chai.use(chaiHttp); 
 
 describe('Planets API Suite', () => {
+    // Test for invalid planet ID
+    describe('Error Handling', () => {
+        it('should return 404 for non-existent planet ID', (done) => {
+            let payload = {
+                id: 999
+            }
+            chai.request(server)
+                .post('/planet')
+                .send(payload)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    res.text.should.equal("Ooops, we only have 9 planets and a sun. Select a number from 0 - 9.");
+                    done();
+                });
+        });
+
+        it('should handle missing ID in request', (done) => {
+            chai.request(server)
+                .post('/planet')
+                .send({})
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+    });
+
+    describe('Planet Data Validation', () => {
+        it('should verify all required fields are present in response', (done) => {
+            let payload = {
+                id: 1
+            }
+            chai.request(server)
+                .post('/planet')
+                .send(payload)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('id');
+                    res.body.should.have.property('name');
+                    res.body.should.have.property('description');
+                    res.body.should.have.property('image');
+                    res.body.should.have.property('velocity');
+                    res.body.should.have.property('distance');
+                    done();
+                });
+        });
+    });
 
     describe('Fetching Planet Details', () => {
         it('it should fetch a planet named Mercury', (done) => {
@@ -151,6 +199,31 @@ describe('Planets API Suite', () => {
 
 //Use below test case to achieve coverage
 describe('Testing Other Endpoints', () => {
+    describe('Homepage Test', () => {
+        it('should serve the index.html file', (done) => {
+            chai.request(server)
+                .get('/')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.should.have.header('content-type', /html/);
+                    done();
+                });
+        });
+    });
+
+    describe('OS Details Endpoint', () => {
+        it('should return OS details with correct format', (done) => {
+            chai.request(server)
+                .get('/os')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('os');
+                    res.body.should.have.property('env');
+                    done();
+                });
+        });
+    });
 
     describe('it should fetch OS Details', () => {
         it('it should fetch OS details', (done) => {
@@ -187,4 +260,10 @@ describe('Testing Other Endpoints', () => {
         });
     });
 
+});
+
+// Clean up test database after all tests
+after((done) => {
+    mongoose.connection.close();
+    done();
 });
