@@ -1,0 +1,58 @@
+name: workflow-2
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'feature/*'
+    paths:
+      - '!README.md'
+env:
+  MONGO_URI: "mongodb+srv://supercluster.d83jj.mongodb.net/superData"
+  MONGO_USERNAME: "superuser"
+  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+jobs:
+  container-jobs:
+    name: Running Containers
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+    services:
+      mongo:
+        image: siddharth67/mongo-db:non-prod
+    env:
+      MONGO_URI: "mongodb+srv://mongo:27017/superData"
+      MONGO_USERNAME: "non-prod-user"
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD_NON_PROD }}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Cache NPM
+      uses: actions/cache@v4
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Unit Testing
+      run: npm test
+
+    - name: Store Test Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: mocha-test-results
+        path: test-results.xml
+
+    - name: Code Coverage
+      continue-on-error: true
+      run: npm run coverage
+
+    - name: Store Coverage Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-results
+        path: coverage
+        retention-days: 7

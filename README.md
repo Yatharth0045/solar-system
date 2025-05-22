@@ -49,6 +49,11 @@ If the installation was successful, you should be able to run the following comm
     - GHCR login
     - GHCR build and push
 
+2. workflow-2
+  - Job: Running Containers
+    - Job containers
+    - Service containers
+
 
 ## Setup Mongo
 ```bash
