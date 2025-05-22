@@ -1,4 +1,7 @@
 name: workflow-2
+concurrency:
+  group: 'workflow-2'
+  cancel-in-progress: true
 on: 
   workflow_dispatch:
   push:
@@ -21,7 +24,7 @@ jobs:
       mongo:
         image: siddharth67/mongo-db:non-prod
     env:
-      MONGO_URI: "mongodb+srv://mongo:27017/superData"
+      MONGO_URI: "mongodb://mongo:27017/superData"
       MONGO_USERNAME: "non-prod-user"
       MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD_NON_PROD }}
     steps:
