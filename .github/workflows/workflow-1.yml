@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - 'feature/*'
+    paths:
+      - '!README.md'
 jobs:
   unit-testing:
     name: Unit Testing

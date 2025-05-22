@@ -44,6 +44,7 @@ If the installation was successful, you should be able to run the following comm
     - Store Test result
     - Run code coverage - ignore if errors out
   - Job: Containerization
+    - Github Token Permissions | [All Permissions](https://docs.github.com/en/actions/security-for-github-actions/security-guides/automatic-token-authentication#permissions-for-the-github_token)
     - Downcase repo
     - GHCR login
     - GHCR build and push
