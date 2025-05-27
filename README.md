@@ -169,8 +169,9 @@ kubectl config view --flatten > kubeconfig
 ## Start minikube and expose it
 ```bash
 minikube start
-kubectl config view --flatten | grep server
-ngrok http https://127.0.0.1:62060 --host-header="127.0.0.1:62060" ## replace port with the value from above output
+export CLUSTER_URL=$(kubectl config view -o json | jq -r '.clusters[].cluster.server') && echo $CLUSTER_URL
+export CLUSTER_IP=$(echo ${CLUSTER_URL} | sed 's|https://||') && echo $CLUSTER_IP
+ngrok http ${CLUSTER_URL} --host-header="${CLUSTER_IP}"
 ## Update the url in kubeconfig
 
 ## Validate if kubeconfig is working
